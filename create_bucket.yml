@@ -1,0 +1,42 @@
+###################################################
+#Author: Almir Candido                            #
+#Contact: https://br.linkedin.com/in/almircandido #
+#                                                 #
+#Ansible Version: 2.9                             #
+#                                                 #
+#Requirements:                                    #
+#Install:                                         #
+#pip install oci                                  #
+###################################################
+#####################################################################
+#Example credential file ~/.oci/config                              #
+#[DEFAULT]                                                          #
+#user=ocid1.user.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  #
+#fingerprint=12:ee:08:77:70:eu:q4:11:qe:89:6w:23:br:0z:1e:b6        #
+#tenancy=ocid1.tenancy.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  #
+#region=sa-saopaulo-1                                               #
+#key_file=~/.oci/oci_api_key.pem                                    #
+#####################################################################
+#Install oracle cloud modules
+#https://docs.ansible.com/ansible/latest/scenario_guides/guide_oracle.html
+#
+#Oracle cloud bucket module
+#https://oracle-cloud-infrastructure-ansible-modules.readthedocs.io/en/latest/modules/oci_bucket_module.html
+#
+# Oracle Cloud Create Bucket
+
+- hosts: localhost
+  gather_facts: false
+  vars:
+    BUCKET_NAME: ANSIBLE_ALMIR_BUCKET  
+  tasks:
+    - name: Create or Update bucket
+      oci_bucket:
+        namespace_name: "grdgkfe4twwz"
+        compartment_id: 'ocid1.tenancy.oc1..xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        name: "{{ BUCKET_NAME }}"
+        public_access_type: 'NoPublicAccess'
+        metadata:
+          project: 'My test'
+        state: 'present'
+...
